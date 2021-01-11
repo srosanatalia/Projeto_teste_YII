@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\FormularioDeRegistro;
 
 class SiteController extends Controller
 {
@@ -20,6 +21,23 @@ class SiteController extends Controller
     {
         return $this->render('cumprimentar', ['mensagem' => $mensagem]);
     }
+
+    public function actionRegistro()
+    {
+        $model = new FormularioDeRegistro();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // dados válidos recebidos no $model
+
+            // faça alguma coisa significativa com o $model aqui ...
+
+            return $this->render('confirmar-registro', ['model' => $model]);
+        } else {
+            // Ou a página esta sendo exibida inicial ou houve algum erro de validação
+            return $this->render('registro', ['model' => $model]);
+        }
+    }
+
     public function behaviors()
     {
         return [
